@@ -86,6 +86,7 @@
 
       messageEl.textContent = "";
 
+
       if (!productName) {
         messageEl.textContent = " Please enter a product name.";
         totalEl.textContent = "Total: —";
@@ -114,7 +115,6 @@
 
       totalEl.textContent = `Total: ${total.toFixed(2)} JD`;
       messageEl.textContent = ` Order for "${productName}" calculated successfully.`;
-      
     }
 
     document.getElementById("calcBtn").addEventListener("click", calculateOrderTotal);
