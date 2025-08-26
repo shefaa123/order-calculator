@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Order Total Calculator</title>
+  <style>
+    body {
+      font-family: system-ui;
+      max-width: 680px;
+      margin: 40px auto;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .addons {
+      display: flex;
+      gap: 16px;
+      margin: 8px 0;
+    }
+
+    #total {
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    .error {
+      color: crimson;
+    }
+
+    .ok {
+      color: seagreen;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Order Total Calculator</h1>
+
+  <label>Product name</label>
+  <input id="name" placeholder="e.g., Notebook" />
+
+  <div class="row">
+    <div>
+      <label>Price (JD)</label>
+      <input id="price" type="number" min="0" step="0.01" placeholder="e.g., 2.50" />
+    </div>
+    <div>
+      <label>Quantity</label>
+      <input id="qty" type="number" min="0" step="1" placeholder="e.g., 3" />
+    </div>
+  </div>
+
+  <label>Add-ons</label>
+  <div class="addons">
+    <label><input type="checkbox" class="addon" data-cost="0.50" /> Gift wrap (0.50)</label>
+    <label><input type="checkbox" class="addon" data-cost="1.00" /> Express (1.00)</label>
+  </div>
+
+  <button onclick="calculateTotal()">Calculate</button>
+
+  <p id="total">Total: —</p>
+  <p id="message"></p>
+
+  <script>
+    function calculateTotal() {
+      const nameInput = document.getElementById("name").value.trim();
+      const price = parseFloat(document.getElementById("price").value);
+      const qty = parseInt(document.getElementById("qty").value);
+      const addons = document.querySelectorAll(".addon");
+      const totalEl = document.getElementById("total");
+      
+
+      
+      let total = price * qty;
+
+      addons.forEach(addon => {
+        if (addon.checked) {
+          total += parseFloat(addon.dataset.cost);
+        }
+      });
+
+      totalEl.textContent = `Total: ${total.toFixed(2)} JD`;
+      messageEl.classList.add("ok");
+    }
+  </script>
+</body>
+
+</html>
