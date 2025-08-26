@@ -66,21 +66,49 @@
     <label><input type="checkbox" class="addon" data-cost="1.00" /> Express (1.00)</label>
   </div>
 
-  <button onclick="calculateTotal()">Calculate</button>
+  <button id="calcBtn">Calculate</button>
 
   <p id="total">Total: —</p>
   <p id="message"></p>
 
   <script>
-    function calculateTotal() {
-      const nameInput = document.getElementById("name").value.trim();
-      const price = parseFloat(document.getElementById("price").value);
-      const qty = parseInt(document.getElementById("qty").value);
+    function calculateOrderTotal() {
+      const nameInput = document.getElementById("name");
+      const priceInput = document.getElementById("price");
+      const qtyInput = document.getElementById("qty");
       const addons = document.querySelectorAll(".addon");
       const totalEl = document.getElementById("total");
-      
+      const messageEl = document.getElementById("message");
 
-      
+      const productName = nameInput.value.trim();
+      const price = parseFloat(priceInput.value);
+      const qty = parseInt(qtyInput.value);
+
+      messageEl.textContent = "";
+      messageEl.className = "";
+
+      if (!productName) {
+        messageEl.textContent = " Please enter a product name.";
+        messageEl.classList.add("error");
+        totalEl.textContent = "Total: —";
+        return;
+      }
+
+      if (isNaN(price) || price <= 0) {
+        messageEl.textContent = " Please enter a valid price greater than 0.";
+        messageEl.classList.add("error");
+        totalEl.textContent = "Total: —";
+        return;
+      }
+
+      if (isNaN(qty) || qty <= 0) {
+        messageEl.textContent = " Please enter a valid quantity greater than 0.";
+        messageEl.classList.add("error");
+        totalEl.textContent = "Total: —";
+        return;
+      }
+git add . && git commit -m "تعديل جديد" && git push origin main
+
       let total = price * qty;
 
       addons.forEach(addon => {
@@ -90,8 +118,11 @@
       });
 
       totalEl.textContent = `Total: ${total.toFixed(2)} JD`;
+      messageEl.textContent = ` Order for "${productName}" calculated successfully.`;
       messageEl.classList.add("ok");
     }
+
+    document.getElementById("calcBtn").addEventListener("click", calculateOrderTotal);
   </script>
 </body>
 
